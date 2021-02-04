@@ -13,10 +13,10 @@ import ProjectsScreen from '../screens/ProjectsScreen';
 const BottomTab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-	const theme = useTheme()
+	const theme = useTheme();
 
 	return (
-		<BottomTab.Navigator initialRouteName="Offset" tabBarOptions={{ activeTintColor: theme.colors?.primary }}>
+		<BottomTab.Navigator initialRouteName="Offset" tabBarOptions={{ activeTintColor: theme.colors?.darkblue }}>
 			<BottomTab.Screen
 				name="Home"
 				component={HomeTabNavigator}
@@ -55,7 +55,7 @@ function HomeTabNavigator() {
 				component={HomeScreen}
 				options={{
 					headerTitle: 'ON A MISSION',
-					headerStyle: { backgroundColor: theme.colors?.primary },
+					headerStyle: { backgroundColor: theme.colors?.darkblue },
 					headerTintColor: '#fff',
 				}}
 			/>
@@ -74,8 +74,8 @@ function ProjectsTabNavigator() {
 				name="ProjectsScreen"
 				component={ProjectsScreen}
 				options={{
-					headerTitle: 'Offset',
-					headerStyle: { backgroundColor: theme.colors?.primary },
+					headerTitle: 'Projects & News',
+					headerStyle: { backgroundColor: theme.colors?.darkblue },
 					headerTintColor: '#fff',
 				}}
 			/>

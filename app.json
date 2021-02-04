@@ -19,13 +19,17 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "world.onamission.onamission",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true
     },
     "android": {
+      "package": "world.onamission.onamission",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
