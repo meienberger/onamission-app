@@ -1,0 +1,71 @@
+Arguments: 
+  /Users/nicolas/.nvm/versions/node/v14.15.1/bin/node /Users/nicolas/.nvm/versions/node/v14.15.1/bin/yarn install --network-timeout 1000000
+
+PATH: 
+  /Users/nicolas/.nvm/versions/node/v14.15.1/bin:/Users/nicolas/.yarn/bin:/Users/nicolas/.config/yarn/global/node_modules/.bin:/Users/nicolas/.fastlane/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/nicolas/Library/Android/sdk/tools:/Users/nicolas/Library/Android/sdk/platform-tools:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Users/nicolas/Library/Python/3.6/bin:/Users/nicolas/.rvm/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.15.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: read ENETDOWN
+      at TLSWrap.onStreamRead (internal/stream_base_commons.js:209:20)
+
+npm manifest: 
+  {
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web",
+      "eject": "expo eject",
+      "test": "jest --watchAll"
+    },
+    "jest": {
+      "preset": "jest-expo"
+    },
+    "dependencies": {
+      "@expo/vector-icons": "^10.0.0",
+      "@react-native-community/masked-view": "0.1.10",
+      "@react-navigation/bottom-tabs": "^5.8.0",
+      "@react-navigation/native": "^5.7.3",
+      "@react-navigation/stack": "^5.9.0",
+      "expo": "~39.0.2",
+      "expo-asset": "~8.2.0",
+      "expo-constants": "~9.2.0",
+      "expo-font": "~8.3.0",
+      "expo-linking": "^1.0.1",
+      "expo-splash-screen": "~0.6.2",
+      "expo-status-bar": "~1.0.2",
+      "expo-web-browser": "~8.5.0",
+      "react": "16.13.1",
+      "react-dom": "16.13.1",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+      "react-native-gesture-handler": "~1.7.0",
+      "react-native-picasso": "^1.0.34",
+      "react-native-safe-area-context": "3.1.4",
+      "react-native-screens": "~2.10.1",
+      "react-native-web": "~0.13.12"
+    },
+    "devDependencies": {
+      "@babel/core": "~7.9.0",
+      "@types/react": "~16.9.35",
+      "@types/react-native": "~0.63.2",
+      "jest-expo": "~39.0.0",
+      "typescript": "~3.9.5"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

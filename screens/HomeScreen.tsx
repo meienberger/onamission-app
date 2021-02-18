@@ -1,22 +1,71 @@
-import { StatusBar } from 'expo-status-bar';
-import * as React from 'react';
-import { Text, View } from 'react-native-picasso';
-import PicassoImage from '../components/PicassoImage';
-import Layout from '../constants/Layout';
+import clsx from "clsx";
+import { StatusBar } from "expo-status-bar";
+import * as React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native-picasso";
+import GlobalOffsetCard from "../components/offset/GlobalOffsetCard";
+import { tintColorLight } from "../constants/Colors";
+import { OFFSET_SECTIONS, OffsetSection } from "../constants/CoreConstants";
+import Layout from "../constants/Layout";
+
+const styles = StyleSheet.create({
+  flexWrap: {
+    flexWrap: "wrap",
+  },
+  cardContainer: {
+    width: Layout.window.width / 2 - 20,
+    height: 200,
+  },
+});
 
 export default function HomeScreen() {
-	return (
-		<View className="flex-1 bg-white">
-			<StatusBar style="light" />
-			<PicassoImage
-				className="mt-lg"
-				source={require('../assets/images/OAM-U-blue.png')}
-				style={{ width: Layout.window.width - 30, height: 100, alignSelf: 'center', resizeMode: 'contain' }}
-			/>
-			<Text className="size-lg p-sm align-center mt-md weight-bold">
-				ON A MISSION is a swiss non-profit organisation enabling businesses and individuals to invest in
-				carefully selected sustainable reforestation projects to offset their carbon emissions.
-			</Text>
-		</View>
-	);
+  const renderSection = (section: OffsetSection, index: number) => {
+    const left = index % 2 === 0;
+
+    return (
+      <View
+        className={clsx("pb-md", { "pr-sm": left, "pl-sm": !left })}
+        style={styles.cardContainer}
+      >
+        <TouchableOpacity className="bg-white flex-1 radius-lg">
+          <Text className="size-lg align-center mt-sm flex-1">
+            {section.title}
+          </Text>
+          <View className="justifycontent-center flex-1">
+            <Text className="size-lg align-center mt-sm">1</Text>
+            <Text className="size-md align-center mt-sm">Individual</Text>
+          </View>
+          <View className="flex-1" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView className="flex-1">
+      <StatusBar style="light" />
+      <ScrollView style={{ backgroundColor: tintColorLight }}>
+        <View className="p-md">
+          <Text className="size-xl color-white weight-bold">
+            Hello Nicolas,
+          </Text>
+          <Text className="size-md mt-sm color-white">
+            Your carbon footprint :
+          </Text>
+          <GlobalOffsetCard className="mt-md" />
+          <View className="bg-blue alignself-center p-md radius-lg mt-md">
+            <Text className="color-white">Do good, offset your footprint</Text>
+          </View>
+          <View style={styles.flexWrap} className="flex-row mt-md">
+            {OFFSET_SECTIONS.map(renderSection)}
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
