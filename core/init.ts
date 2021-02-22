@@ -1,8 +1,12 @@
-import * as Font from 'expo-font';
+import * as Font from "expo-font";
+import { reducers } from "../state";
+import { hydrateStates } from "../state/state-helpers";
 
 export default async () => {
-	try {
-	} catch (e) {
-		console.error(e);
-	}
+  try {
+    // Hydrate reducers
+    await hydrateStates(reducers);
+  } catch (e) {
+    console.error(e);
+  }
 };

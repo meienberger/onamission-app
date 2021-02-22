@@ -8,7 +8,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native-picasso";
+import BottomSheetBehavior from "reanimated-bottom-sheet";
 import GlobalOffsetCard from "../components/offset/GlobalOffsetCard";
+import OffsetBottomSheet from "../components/OffsetBottomSheet";
 import { tintColorLight } from "../constants/Colors";
 import { OFFSET_SECTIONS, OffsetSection } from "../constants/CoreConstants";
 import Layout from "../constants/Layout";
@@ -24,15 +26,29 @@ const styles = StyleSheet.create({
 });
 
 export default function HomeScreen() {
+  const [bottomSheet, setBottomSheet] = React.useState<
+    React.RefObject<BottomSheetBehavior>
+  >();
+  const [section, setSection] = React.useState<OffsetSection>();
+
   const renderSection = (section: OffsetSection, index: number) => {
     const left = index % 2 === 0;
+
+    const openSection = () => {
+      // console.log(bottomSheet);
+      bottomSheet?.current?.snapTo(0);
+      // setSection(section);
+    };
 
     return (
       <View
         className={clsx("pb-md", { "pr-sm": left, "pl-sm": !left })}
         style={styles.cardContainer}
       >
-        <TouchableOpacity className="bg-white flex-1 radius-lg">
+        <TouchableOpacity
+          onPress={openSection}
+          className="bg-white flex-1 radius-lg"
+        >
           <Text className="size-lg align-center mt-sm flex-1">
             {section.title}
           </Text>
@@ -66,6 +82,7 @@ export default function HomeScreen() {
           </View>
         </View>
       </ScrollView>
+      <OffsetBottomSheet onRef={(sheet) => setBottomSheet(sheet)} />
     </SafeAreaView>
   );
 }

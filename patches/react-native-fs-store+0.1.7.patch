@@ -1,0 +1,160 @@
+diff --git a/node_modules/react-native-fs-store/Store.js b/node_modules/react-native-fs-store/Store.js
+index 0ccd358..37a86fb 100644
+--- a/node_modules/react-native-fs-store/Store.js
++++ b/node_modules/react-native-fs-store/Store.js
+@@ -1,4 +1,4 @@
+-const RNFS = require('react-native-fs');
++const RNFS = require('expo-file-system');
+ const merge = require('lodash.merge');
+ 
+ const errUtil = (error, msg) => {
+@@ -10,7 +10,7 @@ class Store {
+   constructor(name) {
+     this.name = name;
+     this.initDone = false;
+-    this.fileName = `${RNFS.DocumentDirectoryPath}/${this.name}.rnjs`;
++    this.fileName = `${RNFS.documentDirectory}/${this.name}.rnjs`;
+   }
+ 
+   async init() {
+@@ -18,12 +18,13 @@ class Store {
+       return;
+     }
+     try {
+-      const file = await RNFS.exists(this.fileName);
+-      if (file) {
++      const file = await RNFS.getInfoAsync(this.fileName);
++
++      if (file.exists) {
+         return;
+       }
+       this.initDone = true;
+-      return RNFS.writeFile(this.fileName, '{}');
++      return RNFS.writeAsStringAsync(this.fileName, '{}');
+     } catch (error) {
+       throw errUtil(error, 'error in init');
+     }
+@@ -36,7 +37,7 @@ class Store {
+   async getItem(key) {
+     await this.init();
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       return items[key];
+     } catch (error) {
+@@ -46,10 +47,10 @@ class Store {
+   async setItem(key, value) {
+     await this.init();
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       items[key] = value;
+-      return RNFS.writeFile(this.fileName, JSON.stringify(items));
++      return RNFS.writeAsStringAsync(this.fileName, JSON.stringify(items));
+     } catch (error) {
+       throw errUtil(error, 'error in setItem');
+     }
+@@ -57,10 +58,10 @@ class Store {
+   async removeItem(key) {
+     await this.init();
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       delete items[key];
+-      return RNFS.writeFile(this.fileName, JSON.stringify(items));
++      return RNFS.writeAsStringAsync(this.fileName, JSON.stringify(items));
+     } catch (error) {
+       throw errUtil(error, 'error in removeItem');
+     }
+@@ -68,10 +69,10 @@ class Store {
+   async mergeItem(key, value) {
+     await this.init();
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       items[key] = merge(items[key], value);
+-      return RNFS.writeFile(this.fileName, JSON.stringify(items));
++      return RNFS.writeAsStringAsync(this.fileName, JSON.stringify(items));
+     } catch (error) {
+       throw errUtil(error, 'error in mergeItem');
+     }
+@@ -79,7 +80,7 @@ class Store {
+   async clear() {
+     await this.init();
+     try {
+-      return RNFS.writeFile(this.fileName, '{}');
++      return RNFS.writeAsStringAsync(this.fileName, '{}');
+     } catch (error) {
+       throw errUtil(error, 'error in clear');      
+     }
+@@ -90,7 +91,7 @@ class Store {
+       throw new Error('input to multiGet is not an array.');
+     }
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       const output = keys.map(key => [key, items[key]]);
+       if (cb && typeof cb === 'function') {
+@@ -107,7 +108,7 @@ class Store {
+   async getAllKeys(cb) {
+     await this.init();
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       const output = Object.keys(items);
+       if (cb && typeof cb === 'function') {
+@@ -127,14 +128,14 @@ class Store {
+       throw new Error('input to multiSet is not an array.');
+     }
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       pairs.forEach(pair => {
+         if (Array.isArray(pair) && pair.length > 1) {
+           items[pair[0]] = pair[1];
+         }
+       });
+-      return RNFS.writeFile(this.fileName, JSON.stringify(items));
++      return RNFS.writeAsStringAsync(this.fileName, JSON.stringify(items));
+     } catch (error) {
+       throw errUtil(error, 'error in multiSet');      
+     }
+@@ -146,12 +147,12 @@ class Store {
+       throw new Error('input to multiRemove is not an array.');
+     }
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       keys.forEach(key => {
+         delete items[key];
+       });
+-      return RNFS.writeFile(this.fileName, JSON.stringify(items));
++      return RNFS.writeAsStringAsync(this.fileName, JSON.stringify(items));
+     } catch (error) {
+       throw errUtil(error, 'error in multiRemove');
+     }
+@@ -162,14 +163,14 @@ class Store {
+       throw new Error('input to multiMerge is not an array.');
+     }
+     try {
+-      const file = await RNFS.readFile(this.fileName);
++      const file = await RNFS.readAsStringAsync(this.fileName);
+       const items = JSON.parse(file);
+       pairs.forEach(pair => {
+         if (Array.isArray(pair) && pair.length > 1) {
+           items[pair[0]] = merge(items[pair[0]], pair[1]);
+         }
+       });
+-      return RNFS.writeFile(this.fileName, JSON.stringify(items));
++      return RNFS.writeAsStringAsync(this.fileName, JSON.stringify(items));
+     } catch (error) {
+       throw errUtil(error, 'error in multiMerge');      
+     }
