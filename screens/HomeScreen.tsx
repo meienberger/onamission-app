@@ -12,8 +12,13 @@ import BottomSheetBehavior from "reanimated-bottom-sheet";
 import GlobalOffsetCard from "../components/offset/GlobalOffsetCard";
 import OffsetBottomSheet from "../components/OffsetBottomSheet";
 import { tintColorLight } from "../constants/Colors";
-import { OFFSET_SECTIONS, OffsetSection } from "../constants/CoreConstants";
+import {
+  OFFSET_SECTIONS,
+  OffsetSection,
+  OffsetTypeUnion,
+} from "../constants/CoreConstants";
 import Layout from "../constants/Layout";
+import { offsetReducer } from "../state/offsetReducer";
 
 const styles = StyleSheet.create({
   flexWrap: {
@@ -29,15 +34,15 @@ export default function HomeScreen() {
   const [bottomSheet, setBottomSheet] = React.useState<
     React.RefObject<BottomSheetBehavior>
   >();
-  const [section, setSection] = React.useState<OffsetSection>();
+  const [offset, setOffset] = offsetReducer.use();
+  const [sheetSection, setSheetSection] = React.useState<OffsetTypeUnion>();
 
   const renderSection = (section: OffsetSection, index: number) => {
     const left = index % 2 === 0;
 
     const openSection = () => {
-      // console.log(bottomSheet);
+      setSheetSection(section.type);
       bottomSheet?.current?.snapTo(0);
-      // setSection(section);
     };
 
     return (
@@ -53,8 +58,10 @@ export default function HomeScreen() {
             {section.title}
           </Text>
           <View className="justifycontent-center flex-1">
-            <Text className="size-lg align-center mt-sm">1</Text>
-            <Text className="size-md align-center mt-sm">Individual</Text>
+            <Text className="size-lg align-center mt-sm">
+              {offset[section.type].value}
+            </Text>
+            <Text className="size-md align-center mt-sm">{section.unit}</Text>
           </View>
           <View className="flex-1" />
         </TouchableOpacity>
@@ -82,7 +89,10 @@ export default function HomeScreen() {
           </View>
         </View>
       </ScrollView>
-      <OffsetBottomSheet onRef={(sheet) => setBottomSheet(sheet)} />
+      <OffsetBottomSheet
+        section={sheetSection}
+        onRef={(sheet) => setBottomSheet(sheet)}
+      />
     </SafeAreaView>
   );
 }
