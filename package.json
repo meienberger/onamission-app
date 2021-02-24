@@ -7,7 +7,9 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "run:linter": "eslint 'src/**/*.ts*'",
+    "run:linter:fix": "eslint 'src/**/*.ts*' --fix"
   },
   "jest": {
     "preset": "jest-expo"
@@ -57,6 +59,8 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "eslint-config-meienberger-react-native-typescript": "^1.0.12",
+    "eslint-plugin-json-format": "^2.0.1",
     "jest-expo": "~39.0.0",
     "typescript": "~3.9.5"
   },
