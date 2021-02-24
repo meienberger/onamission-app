@@ -6,9 +6,11 @@ import {
   OffsetTypeUnion,
   OFFSET_TYPE_HOUSEHOLD,
   OFFSET_TYPE_LEISURE,
+  OFFSET_TYPE_MOBILITY,
 } from '../constants/CoreConstants';
 import HouseholdSheet from './OffsetSheets/HouseholdSheet';
 import LeisureSheet from './OffsetSheets/LeisureSheet';
+import MobilitySheet from './OffsetSheets/MobilitySheet';
 
 interface CProps {
   onRef?: (sheet: React.RefObject<BottomSheet>) => void;
@@ -47,6 +49,12 @@ const OffsetBottomSheet: React.FC<CProps> = (props) => {
         return (
           <View style={styles.sheetStyle} className="bg-white p-lg">
             <LeisureSheet onSave={onSave} />
+          </View>
+        );
+      case OFFSET_TYPE_MOBILITY:
+        return (
+          <View style={styles.sheetStyle} className="bg-white p-lg">
+            <MobilitySheet onSave={onSave} />
           </View>
         );
       default:
