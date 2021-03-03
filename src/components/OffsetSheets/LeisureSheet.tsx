@@ -2,7 +2,10 @@ import Slider from '@react-native-community/slider';
 import React, { useState } from 'react';
 import { View } from 'react-native-animatable';
 import { Text } from 'react-native-picasso';
-import { OFFSET_TYPE_LEISURE } from '../../constants/CoreConstants';
+import {
+  MAX_FLIGHTS,
+  OFFSET_TYPE_LEISURE,
+} from '../../constants/CoreConstants';
 import { getOffsetLeisure } from '../../core/helpers/offset-helpers';
 import { offsetReducer } from '../../state/offsetReducer';
 import Button from '../Button';
@@ -52,7 +55,7 @@ const LeisureSheet: React.FC<CProps> = (props) => {
       <Slider
         onValueChange={changeShort}
         value={shortFlights}
-        maximumValue={6}
+        maximumValue={MAX_FLIGHTS}
       />
       <Text className="size-lg color-secondary align-center mt-md">
         {Math.round(shortFlights)}
@@ -60,7 +63,11 @@ const LeisureSheet: React.FC<CProps> = (props) => {
       <Text className="size-md align-center mb-md mt-lg">
         How many long flights ?
       </Text>
-      <Slider onValueChange={changeLong} value={longFlights} maximumValue={6} />
+      <Slider
+        onValueChange={changeLong}
+        value={longFlights}
+        maximumValue={MAX_FLIGHTS}
+      />
       <Text className="size-lg color-secondary align-center mt-md">
         {Math.round(longFlights)}
       </Text>

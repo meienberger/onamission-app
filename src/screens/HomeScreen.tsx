@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function HomeScreen() {
+export default function HomeScreen(): JSX.Element {
   const [bottomSheet, setBottomSheet] = React.useState<
     React.RefObject<BottomSheetBehavior>
   >();
-  const [offset, setOffset] = offsetReducer.use();
+  const offset = offsetReducer.useValue();
   const [sheetSection, setSheetSection] = React.useState<OffsetTypeUnion>();
 
   const renderSection = (section: OffsetSection, index: number) => {
@@ -48,6 +48,7 @@ export default function HomeScreen() {
 
     return (
       <View
+        key={index}
         className={clsx('pb-md', { 'pr-sm': left, 'pl-sm': !left })}
         style={styles.cardContainer}
       >

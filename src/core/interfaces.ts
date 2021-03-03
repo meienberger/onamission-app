@@ -1,8 +1,14 @@
 import {
+  CommuteTypeUnion,
+  FoodTypeUnion,
+  InsulationTypeUnion,
   OFFSET_TYPE_ENERGY,
+  OFFSET_TYPE_FOOD,
   OFFSET_TYPE_HOUSEHOLD,
   OFFSET_TYPE_LEISURE,
   OFFSET_TYPE_MOBILITY,
+  OFFSET_TYPE_SHOPPING,
+  ShoppingTypeUnion,
 } from '../constants/CoreConstants';
 
 export interface Project {
@@ -43,10 +49,23 @@ interface OffsetSection {
 
 export type OffsetState = {
   [OFFSET_TYPE_HOUSEHOLD]: OffsetSection;
-  [OFFSET_TYPE_ENERGY]: OffsetSection;
+  [OFFSET_TYPE_ENERGY]: OffsetSection & {
+    surface: number;
+    renewable: boolean | null;
+    insulation: InsulationTypeUnion;
+  };
   [OFFSET_TYPE_LEISURE]: OffsetSection & {
     shortFlights: number;
     longFlights: number;
   };
-  [OFFSET_TYPE_MOBILITY]: OffsetSection;
+  [OFFSET_TYPE_MOBILITY]: OffsetSection & {
+    kilometers: number;
+    commuteType: CommuteTypeUnion;
+  };
+  [OFFSET_TYPE_FOOD]: OffsetSection & {
+    foodType: FoodTypeUnion;
+  };
+  [OFFSET_TYPE_SHOPPING]: OffsetSection & {
+    shoppingType: ShoppingTypeUnion;
+  };
 };

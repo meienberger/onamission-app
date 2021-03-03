@@ -3,6 +3,7 @@ import Store from 'react-native-fs-store';
 import { RidgeReducer } from '../core/interfaces';
 
 const Storage = new Store('deevent');
+const SCHEMA_VERSION_KEY = '1.0.4';
 
 /**
  * Persist the given data to the local file system
@@ -27,9 +28,13 @@ export const hydrateStates = async (
   return Promise.all(
     reducers.map(async ({ setter, key }) => {
       try {
+        const keyversion = await Storage.getItem('storageKey');
         const value = await Storage.getItem(key);
 
-        if (value) {
+        if (keyversion !== SCHEMA_VERSION_KEY) {
+          Storage.clear();
+          await Storage.setItem('SCHEMA_VERSION_KEY', SCHEMA_VERSION_KEY);
+        } else if (value) {
           setter.set(JSON.parse(value));
         }
       } catch (e) {
