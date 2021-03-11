@@ -1,13 +1,21 @@
 import React, { useRef } from 'react';
-import { TouchableOpacity, Animated, ViewStyle } from 'react-native';
-import { createPicassoComponent } from 'react-native-picasso';
+import { Animated, ViewStyle } from 'react-native';
+import { TouchableOpacity } from 'react-native-picasso';
 
 interface Props {
-  onPress: () => void;
+  onPress?: () => void;
   style?: ViewStyle;
+  className?: string;
 }
 
-const TouchableScale: React.FC<Props> = ({ onPress, children, style }) => {
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
+const TouchableScale: React.FC<Props> = ({
+  onPress,
+  children,
+  style,
+  className,
+}) => {
   const SCALE = {
     // This defines animation behavior we expext onPressIn
     pressInAnimation(animated: Animated.Value, duration = 150) {
@@ -30,7 +38,8 @@ const TouchableScale: React.FC<Props> = ({ onPress, children, style }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   return (
-    <TouchableOpacity
+    <AnimatedTouchable
+      className={className}
       onPressIn={() => {
         SCALE.pressInAnimation(scaleAnim);
       }}
@@ -39,11 +48,11 @@ const TouchableScale: React.FC<Props> = ({ onPress, children, style }) => {
       }}
       onPress={onPress}
       activeOpacity={0.8}
-      style={[style, { transform: [{ scale: Number(scaleAnim) }] }]}
+      style={[style, { transform: [{ scale: scaleAnim }] }]}
     >
       {children}
-    </TouchableOpacity>
+    </AnimatedTouchable>
   );
 };
 
-export default createPicassoComponent(TouchableScale);
+export default TouchableScale;

@@ -1,83 +1,53 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Text } from 'react-native-picasso';
-import { LinearGradient } from 'expo-linear-gradient';
-import * as Animatable from 'react-native-animatable';
+import { View, Text } from 'react-native-picasso';
 import Layout from '../constants/Layout';
 import { Project } from '../core/interfaces';
+import { RootStackParamList } from '../navigation/types';
 import PerfectImage from './PerfectImage';
 import TouchableScale from './TouchableScale';
 
 interface Props {
   project: Project;
+  navigation: StackNavigationProp<RootStackParamList, 'Projects'>;
 }
 
 const styles = StyleSheet.create({
-  projectName: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    color: 'white',
-    right: 10,
-    zIndex: 100,
-  },
+  projectName: {},
   card: {
-    height: 180,
-    width: Layout.window.width / 2 - 30,
-    marginRight: 10,
-    borderRadius: 10,
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    marginBottom: 20,
-    elevation: 10,
+    height: 150,
+    width: Layout.window.width - 40,
+    overflow: 'hidden',
   },
-  linearGradient: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: 10,
-    zIndex: 1,
-  },
+  image: { height: 150, width: 170 },
 });
 
-const transparent = 'rgba(0,0,0,0)';
-
 const ProjectCell: React.FC<Props> = (props) => {
-  const { project } = props;
+  const { project, navigation } = props;
 
   return (
-    <TouchableScale style={styles.card} className="flex-1">
+    <TouchableScale
+      style={styles.card}
+      className="flex-1 b-2 bg-white mb-lg elevated radius-md alignself-center flex-row"
+      onPress={() => navigation.navigate('ProjectDetails')}
+    >
       <PerfectImage
         className="elevated"
-        style={styles.card}
+        style={styles.image}
         url={project.image}
       />
-      <Animatable.View
-        animation="fadeIn"
-        duration={1000}
-        delay={200}
-        style={styles.linearGradient}
-        useNativeDriver
-      >
-        <LinearGradient
-          style={styles.linearGradient}
-          colors={[
-            transparent,
-            transparent,
-            transparent,
-            'rgba(0,0,0,0.5)',
-            'black',
-          ]}
-        />
-      </Animatable.View>
-      <Text className="weight-bold size-lg" style={styles.projectName}>
-        {project.location}
-      </Text>
+      <View className="flex-1 p-md">
+        <Text style={styles.projectName} className="size-md">
+          {project.location}
+        </Text>
+        <Text
+          style={styles.projectName}
+          className="size-sm color-secondary mt-sm"
+        >
+          {project.description}
+        </Text>
+      </View>
     </TouchableScale>
   );
 };

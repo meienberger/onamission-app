@@ -6,6 +6,7 @@ import * as React from 'react';
 import { useTheme } from 'react-native-picasso';
 import { Theme } from 'react-native-picasso/build/styles/defaultTheme';
 import HomeScreen from '../screens/HomeScreen';
+import ProjectScreen from '../screens/ProjectScreen';
 import ProjectsScreen from '../screens/ProjectsScreen';
 
 const IconStyle = { marginBottom: -3 };
@@ -49,7 +50,15 @@ function ProjectsTabNavigator() {
         name="ProjectsScreen"
         component={ProjectsScreen}
         options={{
-          headerTitle: 'Projects & News',
+          headerTitle: 'Reforestation Projects',
+          headerStyle: { backgroundColor: theme.colors?.darkblue },
+          headerTintColor: '#fff',
+        }}
+      />
+      <ProjectsStack.Screen
+        name="ProjectDetails"
+        component={ProjectScreen}
+        options={{
           headerStyle: { backgroundColor: theme.colors?.darkblue },
           headerTintColor: '#fff',
         }}
