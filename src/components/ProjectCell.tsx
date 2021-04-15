@@ -30,7 +30,7 @@ const ProjectCell: React.FC<Props> = (props) => {
     <TouchableScale
       style={styles.card}
       className="flex-1 b-2 bg-white mb-lg elevated radius-md alignself-center flex-row"
-      onPress={() => navigation.navigate('ProjectDetails')}
+      onPress={() => navigation.navigate('ProjectDetails', { project })}
     >
       <PerfectImage
         className="elevated"

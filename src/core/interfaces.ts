@@ -18,6 +18,7 @@ export interface Project {
   title: string;
   description: string;
   geoJson?: number[][][];
+  objective: number;
 }
 
 export interface StateWithValue<T> {

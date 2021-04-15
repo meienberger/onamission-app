@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "onamission",
+    "name": "On A Mission",
     "slug": "onamission",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,21 +15,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "world.onamission.onamission",
+      "bundleIdentifier": "world.onamission",
       "googleServicesFile": "./GoogleService-Info.plist",
       "supportsTablet": true
     },
     "android": {
-      "package": "world.onamission.onamission",
+      "package": "world.onamission",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
+      }
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

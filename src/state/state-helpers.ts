@@ -25,16 +25,19 @@ export const onSet = debounce((key: string, value: any) => {
 export const hydrateStates = async (
   reducers: RidgeReducer<any>[]
 ): Promise<void[]> => {
+  const schemaVersion = await Storage.getItem('SCHEMA_VERSION_KEY');
+
+  if (schemaVersion !== SCHEMA_VERSION_KEY) {
+    Storage.clear();
+    await Storage.setItem('SCHEMA_VERSION_KEY', SCHEMA_VERSION_KEY);
+  }
+
   return Promise.all(
     reducers.map(async ({ setter, key }) => {
       try {
-        const keyversion = await Storage.getItem('storageKey');
         const value = await Storage.getItem(key);
 
-        if (keyversion !== SCHEMA_VERSION_KEY) {
-          Storage.clear();
-          await Storage.setItem('SCHEMA_VERSION_KEY', SCHEMA_VERSION_KEY);
-        } else if (value) {
+        if (value) {
           setter.set(JSON.parse(value));
         }
       } catch (e) {
